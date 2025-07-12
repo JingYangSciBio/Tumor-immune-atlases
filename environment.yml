@@ -1,0 +1,26 @@
+name: immune-atlas
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  # R core
+  - r-base=4.3.*
+  - r-Seurat=5.0.*
+  - r-SeuratObject
+  - r-mclust
+  - r-cluster
+  - r-ggplot2
+  - r-plyr
+  - r-fgsea
+  - r-cowplot
+  - r-tidyverse
+  - r-patchwork
+  - r-devtools
+  # Python (for scanpy-based QC if desired)
+  - python=3.10
+  - scanpy
+  - anndata
+  - pandas
+  - matplotlib
+  - leidenalg
+  - jupyterlab
