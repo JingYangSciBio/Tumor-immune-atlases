@@ -1,7 +1,7 @@
 # Tumor-immune-atlases
 Reproducible pipeline for benchmarking tumour-immune reference atlases and evaluating supervised vs. unsupervised annotation strategies.
 
-## Quick start
+## Quick start 
 ```bash
 git clone https://github.com/your-lab/ImmuneAtlasBenchmark.git
 cd ImmuneAtlasBenchmark
@@ -13,4 +13,6 @@ Rscript src/02_Atlas_similarity.R
 Rscript src/03_Supervised_annotation.R
 Rscript src/04_Benchmark_metrics.R
 Rscript src/05_Immunotherapy_analysis.R
+```
 ## Citation
+
