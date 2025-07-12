@@ -60,37 +60,14 @@ workdir <- "/Users/jingyang/Dropbox/work/tumor immune cell atlas estimation/data
 
 # SampleInfo_Kathryn <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Clonal replacement of tumor-specific T cells following PD-1 blockade/clinical_meta.txt",header=T,sep="\t")
 SampleInfo_Baolin <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Temporal single-cell tracing reveals clonal revival and expansion of precursor exhausted T cells during anti-PD-1 therapy in lung cancer/GSE179994_Tcell.metadata_with_annotation.txt",header=T,sep="\t");dim(SampleInfo_Baolin)
-# SampleInfo_Moshe <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From Board/Defining T Cell States Associated with Response to Checkpoint Immunotherapy in Melanoma/cells_all_scp.txt",header=T,sep="\t")
-# SampleInfo_Moshe <- SampleInfo_Baolin[-1,]
-# SampleInfo_Moshe <- unique(SampleInfo_Baolin[,c(2:3,8,10:13)])
-# SampleInfo_Moshe <- SampleInfo_Baolin[SampleInfo_Baolin$response %in% c("R","NR"),]
-# SampleInfo_Moshe <- data.frame(SampleId = SampleInfo_Baolin$patient,condition=SampleInfo_Baolin$response,treatment=SampleInfo_Baolin$therapy,prepost=SampleInfo_Baolin$prepost,gender=SampleInfo_Baolin$gender,age=SampleInfo_Baolin$age,os=SampleInfo_Baolin$survival_days,stringsAsFactors=F)
-# SampleInfo_Moshe$prepost <- tolower(SampleInfo_Baolin$prepost)
-# SampleInfo_Moshe <- SampleInfo_Baolin[c(1:10,12:48),]
-# SampleInfo_Caushi <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Transcriptional programs of neoantigen-specific TIL in anti-PD-1-treated lung cancers/clinical_meta4_simplified.txt",header=T,sep="\t")
 
 Baolin_T_NK_cells1 <- readRDS(paste0(workdir,"3_mapping_query_dataset_Baolin_T_NK_cells_to_TICA_T_NK_cells.rds"))
 Baolin_T_NK_cells1 <- subset(Baolin_T_NK_cells1,subset=prepost=="post")
-# Naive_genes <- c("TCF7", "SELL", "LEF1", "CCR7", "IL7R", "CD27", "CD28", "S1PR1")
-# cytotoxic_genes <- c("CX3CR1", "PRF1", "GZMB", "GMZH", "GNLY", "FGFBP2", "FCGR3A", "KLRG1", "LYAR", "GZMK", "GZMM", "TXNIP", "FCRL6", "NKG7", "CCL4", "CST7", "GZMA", "IFNG", "CCL3", "KLRD1", "GZMH", "TBX21", "EOMES", "S1PR1", "S1PR5", "CXCR4", "CXCR3", "CD44")
-# preexhausted_genes <- c("GZMK","PDCD1","ZNF683","ITGAE","CD28")
-# rm_genes <- c("ITGAE", "HAVCR2", "GZMA", "GZMB", "IFNG", "ENTPD1", "CXCL13", "TNFRSF9", "PDCD1", "CCL3", "CTLA4", "TIGIT", "LAG3", "PRF1", "CD6", "CXCL1", "XCL2", "MYADM", "CAPG", "RORA", "NR4A1", "NR4A2", "NR4A3", "CD69", "CD39", "MKI67", "TOP2A", "CCNA2", "KIF2C ", "HMGB2", "TUBA1B", "TUBB", "H2AFZ", "CKS1B", "STMN1")
-# exhausted_genes <- c("LAYN", "ITGAE", "PDCD1", "CTLA4", "HAVCR2", "LAG3", "TIGIT", "CXCL13", "CD38", "ENTPD1", "TOX", "IFNG", "GZMB", "MIR155HG", "TNFRSF9", "CDK1", "CCNB1", "MKI67", "CDK4", "RB1", "HSPH1", "HSPB1")
-# memory_genes <- c("TCF7 ", "CCR7", "SELL ", "IL7R", "SELL", "LTB", "LEF1", "EOMES", "GZMK", "CXCR5", "GPR183", "CD27", "CD28", "GZMA", "CCL5", "S1PR1", "MYADM", "VIM", "ANKRD28", "ATP2B1") 
 activated_T_proliferation <- c("ABL1","AGER","ARG1","BTN2A2","BTN3A1","CADM1","CASP3","CD24","CD274","CLC","CRTAM","EPO","FADD","FOXP3","FYN","GPAM","HHLA2","HMGB1","ICOSLG","IDO1","IGF1","IGF2","IGFBP2","IL12B","IL12RB1","IL18","IL2","IL23A","IL23R","IL27RA","IL2RA","JAK3","LGALS9","LILRB4","LRRC32","MIR181C","MIR21","MIR30B","PDCD1LG2","PPP3CA","PRKAR1A","PRNP","PYCARD","RC3H1","RIPK3","RPS3","SCRIB","SLAMF1","STAT5B","TMIGD2","TNFSF9")
 NK_T_activation <- c("CD300A","ELF4","HSPH1","IL12A","IL12B","IL15","IL18","IL23A","IL23R","JAK2","RASAL3","TYK2","ZBTB7B")
 NK_T_proliferation <- c("ELF4","IL12B","IL15","IL18","IL23A","JAK2","RASAL3","TYK2","ZBTB7B")
 NK_T_differentiation <- c("AP3B1","AP3D1","ATF2","ITK","PRDM1","TGFBR2","TOX","ZBTB16","ZBTB7B","ZNF683")
 
-# Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = Naive_genes, g2m.features = cytotoxic_genes)
-# names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "Naive.Score"
-# names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "Cytotoxic.Score"
-# Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = preexhausted_genes, g2m.features = rm_genes)
-# names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "Preexhausted.Score"
-# names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "Rm.Score"
-# Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = exhausted_genes, g2m.features = memory_genes)
-# names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "Exhausted.Score"
-# names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "Memory.Score"
 Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = activated_T_proliferation, g2m.features = NK_T_activation)
 names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "activated_T_proliferation.Score"
 names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "NK_T_activation.Score"
@@ -792,153 +769,17 @@ pdf(paste0(workdir,"4_immune_response_plots_Baolinpost_Moshepre_Moshepost_STAD_d
 CombinePlots(list(p1,p2,p3),ncol=3)
 dev.off()
 
-############################################
-#### 2023.02.21 Jing Yang 
-#### for 4_immune_response analyses
-############################################
 
-
-### for p values
-
-library(Seurat)
-library(SeuratObject)
-library(lisi)
-library(mclust)
-library(cluster)
-library(ggplot2)
-library(plyr)
-library(ggpubr)
-workdir <- "/Users/jingyang/Dropbox/work/tumor immune cell atlas estimation/data/"
-
-# Kathryn <- read.table(paste0(workdir,"4_immune_response_Kathryn_to_reference.txt"),header=T,sep="\t",row.names = 1);dim(Kathryn)
-# colnames(Kathryn) <- paste0("Kathryn_",colnames(Kathryn))
-# Baolin <- read.table(paste0(workdir,"4_immune_response_Baolin_to_reference.txt"),header=T,sep="\t",row.names = 1);dim(Baolin)
-# colnames(Baolin) <- paste0("Baolin_",colnames(Baolin))
-# Moshe <- read.table(paste0(workdir,"4_immune_response_Moshe_to_reference.txt"),header=T,sep="\t",row.names = 1);dim(Moshe)
-# colnames(Moshe) <- paste0("Moshe_",colnames(Moshe))
-# Caushi <- read.table(paste0(workdir,"4_immune_response_Caushi_to_reference.txt"),header=T,sep="\t",row.names = 1);dim(Caushi)
-# colnames(Caushi) <- paste0("Caushi_",colnames(Caushi))
-# # #
-# # #
-# all <- merge(merge(merge(Kathryn,Baolin,by="row.names",all=T),Moshe,by.x="Row.names",by.y="row.names",all=T),Caushi,by.x="Row.names",by.y="row.names",all=T);dim(all)
-# write.table(all,file=paste0(workdir,"4_immune_response_Kathryn_Baolin_Moshe_Caushi_to_reference_p.txt"),quote = F, sep="\t",row.names = F)
-all <- read.table(paste0(workdir,"4_immune_response_Kathryn_Baolin_Moshe_Caushi_to_reference_p.txt"),header=T,sep="\t")
-output_activated_T_proliferation <- NULL
-output_NK_T_activation <- NULL
-output_NK_T_differentiation <- NULL
-output_NK_T_proliferation <- NULL
-for (i in 1:nrow(all)) {
-  if (sum(all[i,c(8,21,34,47)] < 0.06,na.rm = T) >=4) { #activated_T_proliferation
-    output_activated_T_proliferation <- c(output_activated_T_proliferation,TRUE)
-  } else {
-    output_activated_T_proliferation <- c(output_activated_T_proliferation,FALSE)
-  }
-  if (sum(all[i,c(10,23,36,49)] < 0.06,na.rm = T) >=4) { #NK_T_activation
-    output_NK_T_activation <- c(output_NK_T_activation,TRUE)
-  } else {
-    output_NK_T_activation <- c(output_NK_T_activation,FALSE)
-  }
-  if (sum(all[i,c(12,25,38,51)] < 0.06,na.rm = T) >=4) { #NK_T_differentiation
-    output_NK_T_differentiation <- c(output_NK_T_differentiation,TRUE)
-  } else {
-    output_NK_T_differentiation <- c(output_NK_T_differentiation,FALSE)
-  }
-  if (sum(all[i,c(14,27,40,53)] < 0.06,na.rm = T) >=4) { #NK_T_proliferation
-    output_NK_T_proliferation <- c(output_NK_T_proliferation,TRUE)
-  } else {
-    output_NK_T_proliferation <- c(output_NK_T_proliferation,FALSE)
-  }
-}
-dim(all[output_activated_T_proliferation,])
-  sub_all <- all[output_activated_T_proliferation,]
-  sub_all[,c(1,7,20,33,46)]
-  sub_all[,c(1,2,3,14,15,26,27,38,39)]
-dim(all[output_NK_T_activation,])
-  sub_all <- all[output_NK_T_activation,]
-  sub_all[,c(1,9,22,35,48)] #9_T/NK #Memory CD8 T cell #Terminally exhausted CD8 T cells #Treg
-  #                                                                                                           Row.names Kathryn_NK_T_activation.Score_diff Baolin_NK_T_activation.Score_diff Moshe_NK_T_activation.Score_diff Caushi_NK_T_activation.Score_diff
-  # 3                                                                                                           13_T/NK                       -0.009046571                       0.062765822                       0.10954539                        0.01520865
-  # 12                                                                                                           9_T/NK                       -0.039104586                      -0.008592028                      -0.12320484                        0.01874161
-  # 13                                                                                                    C1_CD8_HAVCR2                       -0.059547158                       0.012612045                      -0.21581061                        0.06067618
-  # 24 CD4.c06.Tm.ANXA1_CD4.c11.Tm.GZMA_CD4.c07.Tm.ANXA2_CD4.c10.Tm.CAPG_CD4.c08.Tm.CREM_CD4.c05.Tm.TNF_CD4.c09.Tm.CCL5                        0.030260316                      -0.022919381                      -0.04561189                        0.01228218
-  # 29                                CD8.c07.Temra.CX3CR1_CD8.c10.Trm.ZNF683_CD4.c13.Temra.CX3CR1_CD4.c13.Temra.CX3CR1                       -0.020661910                       0.011194437                      -0.20748494                        0.03890711
-  # 39                                                                                                             LNK2                       -0.020778573                       0.039195989                      -0.07091404                        0.03279318
-  # 41                                                                                                             LNK4                       -0.046884261                       0.036045707                      -0.12929090                       -0.01003637
-  # 48                                                                                                Memory CD8 T cell                        0.009258482                       0.030100696                      -0.08024372                        0.01683426
-  # 63                                                                                 Terminally exhausted CD8 T cells                       -0.038064638                      -0.011453519                      -0.14816615                        0.07971815
-  # 65                                                                                  Transitional memory CD4 T cells                        0.026311763                       0.014574378                      -0.54989934                        0.01227534
-  # 66                                                                                                             Treg                       -0.010399827                      -0.008701313                      -0.15510899                        0.03521695
-  sub_all[,c(1,2,3,14,15,26,27,38,39)]
-  #                                                                                                           Row.names Kathryn_odds.ratio Kathryn_proportion_p Baolin_odds.ratio Baolin_proportion_p Moshe_odds.ratio Moshe_proportion_p Caushi_odds.ratio Caushi_proportion_p
-  # 3                                                                                                           13_T/NK          1.1110453         8.140000e-06         0.7388747        7.670000e-35        0.4612578       2.230000e-56         0.9608380        4.646031e-02
-  # 12                                                                                                           9_T/NK          1.1340075         2.900000e-09         1.2102940        9.330000e-16        1.4808576       8.860000e-10         0.6420961       5.430000e-110
-  # 13                                                                                                    C1_CD8_HAVCR2          0.7428548         7.190000e-20         0.6832741        8.530000e-40        2.6791384       1.710000e-86         2.4710534        0.000000e+00
-  # 24 CD4.c06.Tm.ANXA1_CD4.c11.Tm.GZMA_CD4.c07.Tm.ANXA2_CD4.c10.Tm.CAPG_CD4.c08.Tm.CREM_CD4.c05.Tm.TNF_CD4.c09.Tm.CCL5          0.7517670         3.700000e-56         1.7618060        1.540000e-77        0.9947932       8.970161e-01         1.1719024        1.380000e-48
-  # 29                                CD8.c07.Temra.CX3CR1_CD8.c10.Trm.ZNF683_CD4.c13.Temra.CX3CR1_CD4.c13.Temra.CX3CR1          1.2838235         8.220000e-75         0.9624286        4.554159e-03        2.4839366       3.440000e-95         0.7951781       8.690000e-102
-  # 39                                                                                                             LNK2          0.9583005         3.582714e-02         0.5979600       2.760000e-115        1.2447705       2.530000e-07         1.7061906       3.600000e-305
-  # 41                                                                                                             LNK4          1.6132764         1.490000e-08         0.7557167        2.823970e-04        0.5128051       1.950000e-08         0.5968763        2.050000e-29
-  # 48                                                                                                Memory CD8 T cell          0.8716413         2.400000e-16         0.7271438        1.560000e-81        1.1956612       2.030000e-06         1.3884254       1.640000e-174
-  # 63                                                                                 Terminally exhausted CD8 T cells          0.6328607         3.350000e-77         0.5514451        8.810000e-80        1.9543440       1.340000e-54         1.1329266        1.780000e-10
-  # 65                                                                                  Transitional memory CD4 T cells          0.6760947         1.630000e-11         4.2730996        0.000000e+00        1.6279534       4.116424e-01         0.5819376       2.810000e-169
-  # 66                                                                                                             Treg          1.5055557         2.100000e-61         1.1386020        5.720000e-06        1.3501253       3.227940e-04         0.5813712       6.310000e-115
-dim(all[output_NK_T_differentiation,])
-  sub_all <- all[output_NK_T_differentiation,]
-  sub_all[,c(1,11,24,37,50)] #
-  #                                                                                                           Row.names Kathryn_NK_T_differentiation.Score_diff Baolin_NK_T_differentiation.Score_diff Moshe_NK_T_differentiation.Score_diff Caushi_NK_T_differentiation.Score_diff
-  # 13                                                                                                    C1_CD8_HAVCR2                              0.02347249                            -0.01574883                           -0.10451427                             0.05581000
-  # 24 CD4.c06.Tm.ANXA1_CD4.c11.Tm.GZMA_CD4.c07.Tm.ANXA2_CD4.c10.Tm.CAPG_CD4.c08.Tm.CREM_CD4.c05.Tm.TNF_CD4.c09.Tm.CCL5                              0.02059599                             0.02573256                            0.12325498                            -0.01102688
-  # 33                                                                                            Cytotoxic CD8 T cells                              0.02794366                            -0.01571215                            0.08519950                             0.01240669
-  # 38                                                                                                             LNK1                              0.07084474                            -0.01165996                            0.19646254                             0.03815410
-  # 49                                                                                                 Naive CD4 T cell                              0.01373868                             0.01836400                            0.08083024                            -0.01082172
-  # 65                                                                                  Transitional memory CD4 T cells                              0.06392275                            -0.04983580                            0.82095248                             0.05196269
-  sub_all[,c(1,2,3,14,15,26,27,38,39)]
-  #                                                                                                           Row.names Kathryn_odds.ratio Kathryn_proportion_p Baolin_odds.ratio Baolin_proportion_p Moshe_odds.ratio Moshe_proportion_p Caushi_odds.ratio Caushi_proportion_p
-  # 4                                                                                                           14_T/NK          2.3594768            5.72e-172         0.4849313           4.45e-100        0.6217920       2.790000e-24         0.5797572           2.77e-215
-  # 13                                                                                                    C1_CD8_HAVCR2          0.7428548             7.19e-20         0.6832741            8.53e-40        2.6791384       1.710000e-86         2.4710534            0.00e+00
-  # 24 CD4.c06.Tm.ANXA1_CD4.c11.Tm.GZMA_CD4.c07.Tm.ANXA2_CD4.c10.Tm.CAPG_CD4.c08.Tm.CREM_CD4.c05.Tm.TNF_CD4.c09.Tm.CCL5          0.7517670             3.70e-56         1.7618060            1.54e-77        0.9947932       8.970161e-01         1.1719024            1.38e-48
-  # 33                                                                                            Cytotoxic CD8 T cells          0.7359367             4.38e-56         0.5725560           1.65e-172        0.7817313       6.650000e-10         0.6240632           1.46e-118
-  # 38                                                                                                             LNK1          1.2832003             1.76e-13         1.6396433            5.64e-79        1.7749319       1.410000e-25         0.7479365            1.98e-16
-  # 49                                                                                                 Naive CD4 T cell          0.9166737             5.79e-08         1.1873818            3.23e-24        0.5353082       1.510000e-51         0.8465456            5.97e-49
-  # 65                                                                                  Transitional memory CD4 T cells          0.6760947             1.63e-11         4.2730996            0.00e+00        1.6279534       4.116424e-01         0.5819376           2.81e-169
-dim(all[output_NK_T_proliferation,])
-  sub_all <- all[output_NK_T_proliferation,]
-  sub_all[,c(1,13,26,39,52)]
-  
-  
 #### prepare plots 
   
   SampleInfo_Kathryn <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Clonal replacement of tumor-specific T cells following PD-1 blockade/clinical_meta.txt",header=T,sep="\t")
-  # SampleInfo_Baolin <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Temporal single-cell tracing reveals clonal revival and expansion of precursor exhausted T cells during anti-PD-1 therapy in lung cancer/GSE179994_Tcell.metadata_with_annotation.txt",header=T,sep="\t");dim(SampleInfo_Kathryn)
-  # SampleInfo_Moshe <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From Board/Defining T Cell States Associated with Response to Checkpoint Immunotherapy in Melanoma/cells_all_scp.txt",header=T,sep="\t")
-  # SampleInfo_Moshe <- SampleInfo_Kathryn[-1,]
-  # SampleInfo_Moshe <- unique(SampleInfo_Kathryn[,c(2:3,8,10:13)])
-  # SampleInfo_Moshe <- SampleInfo_Kathryn[SampleInfo_Kathryn$response %in% c("R","NR"),]
-  # SampleInfo_Moshe <- data.frame(SampleId = SampleInfo_Kathryn$patient,condition=SampleInfo_Kathryn$response,treatment=SampleInfo_Kathryn$therapy,prepost=SampleInfo_Kathryn$prepost,gender=SampleInfo_Kathryn$gender,age=SampleInfo_Kathryn$age,os=SampleInfo_Kathryn$survival_days,stringsAsFactors=F)
-  # SampleInfo_Moshe$prepost <- tolower(SampleInfo_Kathryn$prepost)
-  # SampleInfo_Moshe <- SampleInfo_Kathryn[c(1:10,12:48),]
-  # SampleInfo_Caushi <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Transcriptional programs of neoantigen-specific TIL in anti-PD-1-treated lung cancers/clinical_meta4_simplified.txt",header=T,sep="\t")
   
   Kathryn_T_NK_cells1 <- readRDS(paste0(workdir,"3_mapping_query_dataset_Kathryn_T_NK_cells_to_TICA_T_NK_cells.rds"))
-  # Naive_genes <- c("TCF7", "SELL", "LEF1", "CCR7", "IL7R", "CD27", "CD28", "S1PR1")
-  # cytotoxic_genes <- c("CX3CR1", "PRF1", "GZMB", "GMZH", "GNLY", "FGFBP2", "FCGR3A", "KLRG1", "LYAR", "GZMK", "GZMM", "TXNIP", "FCRL6", "NKG7", "CCL4", "CST7", "GZMA", "IFNG", "CCL3", "KLRD1", "GZMH", "TBX21", "EOMES", "S1PR1", "S1PR5", "CXCR4", "CXCR3", "CD44")
-  # preexhausted_genes <- c("GZMK","PDCD1","ZNF683","ITGAE","CD28")
-  # rm_genes <- c("ITGAE", "HAVCR2", "GZMA", "GZMB", "IFNG", "ENTPD1", "CXCL13", "TNFRSF9", "PDCD1", "CCL3", "CTLA4", "TIGIT", "LAG3", "PRF1", "CD6", "CXCL1", "XCL2", "MYADM", "CAPG", "RORA", "NR4A1", "NR4A2", "NR4A3", "CD69", "CD39", "MKI67", "TOP2A", "CCNA2", "KIF2C ", "HMGB2", "TUBA1B", "TUBB", "H2AFZ", "CKS1B", "STMN1")
-  # exhausted_genes <- c("LAYN", "ITGAE", "PDCD1", "CTLA4", "HAVCR2", "LAG3", "TIGIT", "CXCL13", "CD38", "ENTPD1", "TOX", "IFNG", "GZMB", "MIR155HG", "TNFRSF9", "CDK1", "CCNB1", "MKI67", "CDK4", "RB1", "HSPH1", "HSPB1")
-  # memory_genes <- c("TCF7 ", "CCR7", "SELL ", "IL7R", "SELL", "LTB", "LEF1", "EOMES", "GZMK", "CXCR5", "GPR183", "CD27", "CD28", "GZMA", "CCL5", "S1PR1", "MYADM", "VIM", "ANKRD28", "ATP2B1") 
   activated_T_proliferation <- c("ABL1","AGER","ARG1","BTN2A2","BTN3A1","CADM1","CASP3","CD24","CD274","CLC","CRTAM","EPO","FADD","FOXP3","FYN","GPAM","HHLA2","HMGB1","ICOSLG","IDO1","IGF1","IGF2","IGFBP2","IL12B","IL12RB1","IL18","IL2","IL23A","IL23R","IL27RA","IL2RA","JAK3","LGALS9","LILRB4","LRRC32","MIR181C","MIR21","MIR30B","PDCD1LG2","PPP3CA","PRKAR1A","PRNP","PYCARD","RC3H1","RIPK3","RPS3","SCRIB","SLAMF1","STAT5B","TMIGD2","TNFSF9")
   NK_T_activation <- c("CD300A","ELF4","HSPH1","IL12A","IL12B","IL15","IL18","IL23A","IL23R","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_proliferation <- c("ELF4","IL12B","IL15","IL18","IL23A","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_differentiation <- c("AP3B1","AP3D1","ATF2","ITK","PRDM1","TGFBR2","TOX","ZBTB16","ZBTB7B","ZNF683")
   
-  # Kathryn_T_NK_cells1 <- CellCycleScoring(Kathryn_T_NK_cells1,s.features = Naive_genes, g2m.features = cytotoxic_genes)
-  # names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="S.Score")] <- "Naive.Score"
-  # names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="G2M.Score")] <- "Cytotoxic.Score"
-  # Kathryn_T_NK_cells1 <- CellCycleScoring(Kathryn_T_NK_cells1,s.features = preexhausted_genes, g2m.features = rm_genes)
-  # names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="S.Score")] <- "Preexhausted.Score"
-  # names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="G2M.Score")] <- "Rm.Score"
-  # Kathryn_T_NK_cells1 <- CellCycleScoring(Kathryn_T_NK_cells1,s.features = exhausted_genes, g2m.features = memory_genes)
-  # names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="S.Score")] <- "Exhausted.Score"
-  # names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="G2M.Score")] <- "Memory.Score"
   Kathryn_T_NK_cells1 <- CellCycleScoring(Kathryn_T_NK_cells1,s.features = activated_T_proliferation, g2m.features = NK_T_activation)
   names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="S.Score")] <- "activated_T_proliferation.Score"
   names(Kathryn_T_NK_cells1@meta.data)[which(names(Kathryn_T_NK_cells1@meta.data)=="G2M.Score")] <- "NK_T_activation.Score"
@@ -1017,37 +858,14 @@ dim(all[output_NK_T_proliferation,])
   
   # SampleInfo_Kathryn <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Clonal replacement of tumor-specific T cells following PD-1 blockade/clinical_meta.txt",header=T,sep="\t")
   SampleInfo_Baolin <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Temporal single-cell tracing reveals clonal revival and expansion of precursor exhausted T cells during anti-PD-1 therapy in lung cancer/GSE179994_Tcell.metadata_with_annotation.txt",header=T,sep="\t");dim(SampleInfo_Baolin)
-  # SampleInfo_Moshe <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From Board/Defining T Cell States Associated with Response to Checkpoint Immunotherapy in Melanoma/cells_all_scp.txt",header=T,sep="\t")
-  # SampleInfo_Moshe <- SampleInfo_Baolin[-1,]
-  # SampleInfo_Moshe <- unique(SampleInfo_Baolin[,c(2:3,8,10:13)])
-  # SampleInfo_Moshe <- SampleInfo_Baolin[SampleInfo_Baolin$response %in% c("R","NR"),]
-  # SampleInfo_Moshe <- data.frame(SampleId = SampleInfo_Baolin$patient,condition=SampleInfo_Baolin$response,treatment=SampleInfo_Baolin$therapy,prepost=SampleInfo_Baolin$prepost,gender=SampleInfo_Baolin$gender,age=SampleInfo_Baolin$age,os=SampleInfo_Baolin$survival_days,stringsAsFactors=F)
-  # SampleInfo_Moshe$prepost <- tolower(SampleInfo_Baolin$prepost)
-  # SampleInfo_Moshe <- SampleInfo_Baolin[c(1:10,12:48),]
-  # SampleInfo_Caushi <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Transcriptional programs of neoantigen-specific TIL in anti-PD-1-treated lung cancers/clinical_meta4_simplified.txt",header=T,sep="\t")
-  
+    
   Baolin_T_NK_cells1 <- readRDS(paste0(workdir,"3_mapping_query_dataset_Baolin_T_NK_cells_to_TICA_T_NK_cells.rds"))
-  # Naive_genes <- c("TCF7", "SELL", "LEF1", "CCR7", "IL7R", "CD27", "CD28", "S1PR1")
-  # cytotoxic_genes <- c("CX3CR1", "PRF1", "GZMB", "GMZH", "GNLY", "FGFBP2", "FCGR3A", "KLRG1", "LYAR", "GZMK", "GZMM", "TXNIP", "FCRL6", "NKG7", "CCL4", "CST7", "GZMA", "IFNG", "CCL3", "KLRD1", "GZMH", "TBX21", "EOMES", "S1PR1", "S1PR5", "CXCR4", "CXCR3", "CD44")
-  # preexhausted_genes <- c("GZMK","PDCD1","ZNF683","ITGAE","CD28")
-  # rm_genes <- c("ITGAE", "HAVCR2", "GZMA", "GZMB", "IFNG", "ENTPD1", "CXCL13", "TNFRSF9", "PDCD1", "CCL3", "CTLA4", "TIGIT", "LAG3", "PRF1", "CD6", "CXCL1", "XCL2", "MYADM", "CAPG", "RORA", "NR4A1", "NR4A2", "NR4A3", "CD69", "CD39", "MKI67", "TOP2A", "CCNA2", "KIF2C ", "HMGB2", "TUBA1B", "TUBB", "H2AFZ", "CKS1B", "STMN1")
-  # exhausted_genes <- c("LAYN", "ITGAE", "PDCD1", "CTLA4", "HAVCR2", "LAG3", "TIGIT", "CXCL13", "CD38", "ENTPD1", "TOX", "IFNG", "GZMB", "MIR155HG", "TNFRSF9", "CDK1", "CCNB1", "MKI67", "CDK4", "RB1", "HSPH1", "HSPB1")
-  # memory_genes <- c("TCF7 ", "CCR7", "SELL ", "IL7R", "SELL", "LTB", "LEF1", "EOMES", "GZMK", "CXCR5", "GPR183", "CD27", "CD28", "GZMA", "CCL5", "S1PR1", "MYADM", "VIM", "ANKRD28", "ATP2B1") 
-  activated_T_proliferation <- c("ABL1","AGER","ARG1","BTN2A2","BTN3A1","CADM1","CASP3","CD24","CD274","CLC","CRTAM","EPO","FADD","FOXP3","FYN","GPAM","HHLA2","HMGB1","ICOSLG","IDO1","IGF1","IGF2","IGFBP2","IL12B","IL12RB1","IL18","IL2","IL23A","IL23R","IL27RA","IL2RA","JAK3","LGALS9","LILRB4","LRRC32","MIR181C","MIR21","MIR30B","PDCD1LG2","PPP3CA","PRKAR1A","PRNP","PYCARD","RC3H1","RIPK3","RPS3","SCRIB","SLAMF1","STAT5B","TMIGD2","TNFSF9")
+    activated_T_proliferation <- c("ABL1","AGER","ARG1","BTN2A2","BTN3A1","CADM1","CASP3","CD24","CD274","CLC","CRTAM","EPO","FADD","FOXP3","FYN","GPAM","HHLA2","HMGB1","ICOSLG","IDO1","IGF1","IGF2","IGFBP2","IL12B","IL12RB1","IL18","IL2","IL23A","IL23R","IL27RA","IL2RA","JAK3","LGALS9","LILRB4","LRRC32","MIR181C","MIR21","MIR30B","PDCD1LG2","PPP3CA","PRKAR1A","PRNP","PYCARD","RC3H1","RIPK3","RPS3","SCRIB","SLAMF1","STAT5B","TMIGD2","TNFSF9")
   NK_T_activation <- c("CD300A","ELF4","HSPH1","IL12A","IL12B","IL15","IL18","IL23A","IL23R","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_proliferation <- c("ELF4","IL12B","IL15","IL18","IL23A","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_differentiation <- c("AP3B1","AP3D1","ATF2","ITK","PRDM1","TGFBR2","TOX","ZBTB16","ZBTB7B","ZNF683")
   
-  # Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = Naive_genes, g2m.features = cytotoxic_genes)
-  # names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "Naive.Score"
-  # names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "Cytotoxic.Score"
-  # Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = preexhausted_genes, g2m.features = rm_genes)
-  # names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "Preexhausted.Score"
-  # names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "Rm.Score"
-  # Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = exhausted_genes, g2m.features = memory_genes)
-  # names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "Exhausted.Score"
-  # names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "Memory.Score"
-  Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = activated_T_proliferation, g2m.features = NK_T_activation)
+   Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = activated_T_proliferation, g2m.features = NK_T_activation)
   names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="S.Score")] <- "activated_T_proliferation.Score"
   names(Baolin_T_NK_cells1@meta.data)[which(names(Baolin_T_NK_cells1@meta.data)=="G2M.Score")] <- "NK_T_activation.Score"
   Baolin_T_NK_cells1 <- CellCycleScoring(Baolin_T_NK_cells1,s.features = NK_T_proliferation, g2m.features = NK_T_differentiation)
@@ -1132,26 +950,11 @@ dim(all[output_NK_T_proliferation,])
   # SampleInfo_Caushi <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Transcriptional programs of neoantigen-specific TIL in anti-PD-1-treated lung cancers/clinical_meta4_simplified.txt",header=T,sep="\t")
   
   Moshe_T_NK_cells1 <- readRDS(paste0(workdir,"3_mapping_query_dataset_Moshe_T_NK_cells_to_TICA_T_NK_cells.rds"))
-  # Naive_genes <- c("TCF7", "SELL", "LEF1", "CCR7", "IL7R", "CD27", "CD28", "S1PR1")
-  # cytotoxic_genes <- c("CX3CR1", "PRF1", "GZMB", "GMZH", "GNLY", "FGFBP2", "FCGR3A", "KLRG1", "LYAR", "GZMK", "GZMM", "TXNIP", "FCRL6", "NKG7", "CCL4", "CST7", "GZMA", "IFNG", "CCL3", "KLRD1", "GZMH", "TBX21", "EOMES", "S1PR1", "S1PR5", "CXCR4", "CXCR3", "CD44")
-  # preexhausted_genes <- c("GZMK","PDCD1","ZNF683","ITGAE","CD28")
-  # rm_genes <- c("ITGAE", "HAVCR2", "GZMA", "GZMB", "IFNG", "ENTPD1", "CXCL13", "TNFRSF9", "PDCD1", "CCL3", "CTLA4", "TIGIT", "LAG3", "PRF1", "CD6", "CXCL1", "XCL2", "MYADM", "CAPG", "RORA", "NR4A1", "NR4A2", "NR4A3", "CD69", "CD39", "MKI67", "TOP2A", "CCNA2", "KIF2C ", "HMGB2", "TUBA1B", "TUBB", "H2AFZ", "CKS1B", "STMN1")
-  # exhausted_genes <- c("LAYN", "ITGAE", "PDCD1", "CTLA4", "HAVCR2", "LAG3", "TIGIT", "CXCL13", "CD38", "ENTPD1", "TOX", "IFNG", "GZMB", "MIR155HG", "TNFRSF9", "CDK1", "CCNB1", "MKI67", "CDK4", "RB1", "HSPH1", "HSPB1")
-  # memory_genes <- c("TCF7 ", "CCR7", "SELL ", "IL7R", "SELL", "LTB", "LEF1", "EOMES", "GZMK", "CXCR5", "GPR183", "CD27", "CD28", "GZMA", "CCL5", "S1PR1", "MYADM", "VIM", "ANKRD28", "ATP2B1") 
   activated_T_proliferation <- c("ABL1","AGER","ARG1","BTN2A2","BTN3A1","CADM1","CASP3","CD24","CD274","CLC","CRTAM","EPO","FADD","FOXP3","FYN","GPAM","HHLA2","HMGB1","ICOSLG","IDO1","IGF1","IGF2","IGFBP2","IL12B","IL12RB1","IL18","IL2","IL23A","IL23R","IL27RA","IL2RA","JAK3","LGALS9","LILRB4","LRRC32","MIR181C","MIR21","MIR30B","PDCD1LG2","PPP3CA","PRKAR1A","PRNP","PYCARD","RC3H1","RIPK3","RPS3","SCRIB","SLAMF1","STAT5B","TMIGD2","TNFSF9")
   NK_T_activation <- c("CD300A","ELF4","HSPH1","IL12A","IL12B","IL15","IL18","IL23A","IL23R","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_proliferation <- c("ELF4","IL12B","IL15","IL18","IL23A","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_differentiation <- c("AP3B1","AP3D1","ATF2","ITK","PRDM1","TGFBR2","TOX","ZBTB16","ZBTB7B","ZNF683")
   
-  # Moshe_T_NK_cells1 <- CellCycleScoring(Moshe_T_NK_cells1,s.features = Naive_genes, g2m.features = cytotoxic_genes)
-  # names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="S.Score")] <- "Naive.Score"
-  # names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="G2M.Score")] <- "Cytotoxic.Score"
-  # Moshe_T_NK_cells1 <- CellCycleScoring(Moshe_T_NK_cells1,s.features = preexhausted_genes, g2m.features = rm_genes)
-  # names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="S.Score")] <- "Preexhausted.Score"
-  # names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="G2M.Score")] <- "Rm.Score"
-  # Moshe_T_NK_cells1 <- CellCycleScoring(Moshe_T_NK_cells1,s.features = exhausted_genes, g2m.features = memory_genes)
-  # names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="S.Score")] <- "Exhausted.Score"
-  # names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="G2M.Score")] <- "Memory.Score"
   Moshe_T_NK_cells1 <- CellCycleScoring(Moshe_T_NK_cells1,s.features = activated_T_proliferation, g2m.features = NK_T_activation)
   names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="S.Score")] <- "activated_T_proliferation.Score"
   names(Moshe_T_NK_cells1@meta.data)[which(names(Moshe_T_NK_cells1@meta.data)=="G2M.Score")] <- "NK_T_activation.Score"
@@ -1227,38 +1030,14 @@ dim(all[output_NK_T_proliferation,])
   rm(Moshe_T_NK_cells1)
   
   
-  # SampleInfo_Kathryn <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Clonal replacement of tumor-specific T cells following PD-1 blockade/clinical_meta.txt",header=T,sep="\t")
-  # SampleInfo_Baolin <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Temporal single-cell tracing reveals clonal revival and expansion of precursor exhausted T cells during anti-PD-1 therapy in lung cancer/GSE179994_Tcell.metadata_with_annotation.txt",header=T,sep="\t");dim(SampleInfo_Caushi)
-  # SampleInfo_Moshe <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From Board/Defining T Cell States Associated with Response to Checkpoint Immunotherapy in Melanoma/cells_all_scp.txt",header=T,sep="\t")
-  # SampleInfo_Moshe <- SampleInfo_Caushi[-1,]
-  # SampleInfo_Moshe <- unique(SampleInfo_Caushi[,c(2:3,8,10:13)])
-  # SampleInfo_Moshe <- SampleInfo_Caushi[SampleInfo_Caushi$response %in% c("R","NR"),]
-  # SampleInfo_Moshe <- data.frame(SampleId = SampleInfo_Caushi$patient,condition=SampleInfo_Caushi$response,treatment=SampleInfo_Caushi$therapy,prepost=SampleInfo_Caushi$prepost,gender=SampleInfo_Caushi$gender,age=SampleInfo_Caushi$age,os=SampleInfo_Caushi$survival_days,stringsAsFactors=F)
-  # SampleInfo_Moshe$prepost <- tolower(SampleInfo_Caushi$prepost)
-  # SampleInfo_Moshe <- SampleInfo_Caushi[c(1:10,12:48),]
   SampleInfo_Caushi <- read.table("/Users/jingyang/Dropbox/work/Single-cell meta-analysis/data sets/From GEO/Transcriptional programs of neoantigen-specific TIL in anti-PD-1-treated lung cancers/clinical_meta4_simplified.txt",header=T,sep="\t")
   
   Caushi_T_NK_cells1 <- readRDS(paste0(workdir,"3_mapping_query_dataset_Caushi_T_NK_cells_to_TICA_T_NK_cells.rds"))
-  # Naive_genes <- c("TCF7", "SELL", "LEF1", "CCR7", "IL7R", "CD27", "CD28", "S1PR1")
-  # cytotoxic_genes <- c("CX3CR1", "PRF1", "GZMB", "GMZH", "GNLY", "FGFBP2", "FCGR3A", "KLRG1", "LYAR", "GZMK", "GZMM", "TXNIP", "FCRL6", "NKG7", "CCL4", "CST7", "GZMA", "IFNG", "CCL3", "KLRD1", "GZMH", "TBX21", "EOMES", "S1PR1", "S1PR5", "CXCR4", "CXCR3", "CD44")
-  # preexhausted_genes <- c("GZMK","PDCD1","ZNF683","ITGAE","CD28")
-  # rm_genes <- c("ITGAE", "HAVCR2", "GZMA", "GZMB", "IFNG", "ENTPD1", "CXCL13", "TNFRSF9", "PDCD1", "CCL3", "CTLA4", "TIGIT", "LAG3", "PRF1", "CD6", "CXCL1", "XCL2", "MYADM", "CAPG", "RORA", "NR4A1", "NR4A2", "NR4A3", "CD69", "CD39", "MKI67", "TOP2A", "CCNA2", "KIF2C ", "HMGB2", "TUBA1B", "TUBB", "H2AFZ", "CKS1B", "STMN1")
-  # exhausted_genes <- c("LAYN", "ITGAE", "PDCD1", "CTLA4", "HAVCR2", "LAG3", "TIGIT", "CXCL13", "CD38", "ENTPD1", "TOX", "IFNG", "GZMB", "MIR155HG", "TNFRSF9", "CDK1", "CCNB1", "MKI67", "CDK4", "RB1", "HSPH1", "HSPB1")
-  # memory_genes <- c("TCF7 ", "CCR7", "SELL ", "IL7R", "SELL", "LTB", "LEF1", "EOMES", "GZMK", "CXCR5", "GPR183", "CD27", "CD28", "GZMA", "CCL5", "S1PR1", "MYADM", "VIM", "ANKRD28", "ATP2B1") 
   activated_T_proliferation <- c("ABL1","AGER","ARG1","BTN2A2","BTN3A1","CADM1","CASP3","CD24","CD274","CLC","CRTAM","EPO","FADD","FOXP3","FYN","GPAM","HHLA2","HMGB1","ICOSLG","IDO1","IGF1","IGF2","IGFBP2","IL12B","IL12RB1","IL18","IL2","IL23A","IL23R","IL27RA","IL2RA","JAK3","LGALS9","LILRB4","LRRC32","MIR181C","MIR21","MIR30B","PDCD1LG2","PPP3CA","PRKAR1A","PRNP","PYCARD","RC3H1","RIPK3","RPS3","SCRIB","SLAMF1","STAT5B","TMIGD2","TNFSF9")
   NK_T_activation <- c("CD300A","ELF4","HSPH1","IL12A","IL12B","IL15","IL18","IL23A","IL23R","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_proliferation <- c("ELF4","IL12B","IL15","IL18","IL23A","JAK2","RASAL3","TYK2","ZBTB7B")
   NK_T_differentiation <- c("AP3B1","AP3D1","ATF2","ITK","PRDM1","TGFBR2","TOX","ZBTB16","ZBTB7B","ZNF683")
   
-  # Caushi_T_NK_cells1 <- CellCycleScoring(Caushi_T_NK_cells1,s.features = Naive_genes, g2m.features = cytotoxic_genes)
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="S.Score")] <- "Naive.Score"
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="G2M.Score")] <- "Cytotoxic.Score"
-  # Caushi_T_NK_cells1 <- CellCycleScoring(Caushi_T_NK_cells1,s.features = preexhausted_genes, g2m.features = rm_genes)
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="S.Score")] <- "Preexhausted.Score"
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="G2M.Score")] <- "Rm.Score"
-  # Caushi_T_NK_cells1 <- CellCycleScoring(Caushi_T_NK_cells1,s.features = exhausted_genes, g2m.features = memory_genes)
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="S.Score")] <- "Exhausted.Score"
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="G2M.Score")] <- "Memory.Score"
   Caushi_T_NK_cells1 <- CellCycleScoring(Caushi_T_NK_cells1,s.features = activated_T_proliferation, g2m.features = NK_T_activation)
   names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="S.Score")] <- "activated_T_proliferation.Score"
   names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="G2M.Score")] <- "NK_T_activation.Score"
@@ -1266,8 +1045,6 @@ dim(all[output_NK_T_proliferation,])
   names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="S.Score")] <- "NK_T_proliferation.Score"
   names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="G2M.Score")] <- "NK_T_differentiation.Score"
   Caushi_T_NK_cells1 <- CellCycleScoring(Caushi_T_NK_cells1,s.features = cc.genes$s.genes, g2m.features = cc.genes$g2m.genes)
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="S.Score")] <- "NK_T_proliferation.Score"
-  # names(Caushi_T_NK_cells1@meta.data)[which(names(Caushi_T_NK_cells1@meta.data)=="G2M.Score")] <- "NK_T_differentiation.Score"
   
   Caushi_T_NK_cells2 <- readRDS(paste0(workdir,"3_mapping_query_dataset_Caushi_T_NK_cells_to_pancancer_T_cells_CD8_CD4.rds"))
   Caushi_T_NK_cells2_predicted.to_pancancer_T_cells_CD8_CD4 <- Caushi_T_NK_cells2$predicted.to_pancancer_T_cells_CD8_CD4
