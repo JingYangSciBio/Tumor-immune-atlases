@@ -8,11 +8,10 @@ cd ImmuneAtlasBenchmark
 conda env create -f environment.yml
 conda activate immune-atlas
 Rscript data/download_data.R
-Rscript src/01_QC_and_preprocessing.R
-Rscript src/02_Atlas_similarity.R
-Rscript src/03_Supervised_annotation.R
-Rscript src/04_Benchmark_metrics.R
-Rscript src/05_Immunotherapy_analysis.R
+Rscript src/1_Atlas_similarity.R
+Rscript src/2_Assessment_of_manually_labeled_datasets.R
+Rscript src/3_Benchmark_metrics.R
+Rscript src/4_immune_response_analysis.R
 ```
 ## Citation
 
